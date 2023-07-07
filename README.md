@@ -1,4 +1,4 @@
-# life-and-death
+# Life and Death
 Game I made because I couldn't participate to the GMTK Game Jam
 
 Because I go on holiday when the GMTK game jam starts, I rather did a sort of "game jam" with only myself.
