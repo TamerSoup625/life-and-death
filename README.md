@@ -15,4 +15,6 @@ Controls:
 - LMB: Fire
 - ESC: Pause
 
+Itch.io page: https://ts625.itch.io/life-and-death
+
 Firearm SFX: https://freesound.org/people/kretopi/sounds/406474/
