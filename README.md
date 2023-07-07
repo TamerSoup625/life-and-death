@@ -1,7 +1,7 @@
 # Life and Death
 Game I made because I couldn't participate to the GMTK Game Jam
 
-Because I go on holiday when the GMTK game jam starts, I rather did a sort of "game jam" with only myself.
+Because I'm on holiday during the 2023 GMTK game jam, I rather did a sort of "game jam" with myself.
 
 Starting from July 1st, I asked an AI to give me a theme for a game jam and had to make a game with said theme before I went on holiday. The theme was "Parallel Realms" and after 6 days and about 18 hours of work, I managed to create a game called "Life and Death".
 
