@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnaoif5hsd5m3"]
+
+[ext_resource type="PackedScene" uid="uid://dr64mj2okjflf" path="res://scenes/character.tscn" id="1_tmkm1"]
+[ext_resource type="Script" path="res://scenes/player.gd" id="2_ux6v4"]
+[ext_resource type="PackedScene" uid="uid://cpsnbh4kybuy" path="res://scenes/weapons/pistol.tscn" id="3_mp3ic"]
+[ext_resource type="AudioStream" uid="uid://bow2vht84sok6" path="res://imports/hit_mark.mp3" id="4_6cdvf"]
+
+[node name="Player" node_paths=PackedStringArray("weapon") instance=ExtResource("1_tmkm1")]
+script = ExtResource("2_ux6v4")
+weapon = NodePath("Head/Pistol")
+
+[node name="MeshInstance3D" parent="." index="1"]
+cast_shadow = 3
+
+[node name="Camera" type="Camera3D" parent="Head" index="0"]
+unique_name_in_owner = true
+
+[node name="Pistol" parent="Head" index="1" instance=ExtResource("3_mp3ic")]
+
+[node name="NameLabel" parent="." index="4"]
+visible = false
+
+[node name="HitMark" type="AudioStreamPlayer" parent="." index="5"]
+unique_name_in_owner = true
+stream = ExtResource("4_6cdvf")
+volume_db = 1.0
+pitch_scale = 1.5
+max_polyphony = 32
+bus = &"sfx"
+
+[connection signal="attack_worked" from="Head/Pistol" to="." method="_on_attack_worked"]

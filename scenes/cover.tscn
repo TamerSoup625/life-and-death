@@ -1,0 +1,73 @@
+[gd_scene load_steps=6 format=3 uid="uid://blj5acxxpa0kd"]
+
+[ext_resource type="PackedScene" uid="uid://bvrkt3siikuy0" path="res://scenes/life_world.tscn" id="1_d83w0"]
+[ext_resource type="Script" path="res://scenes/cover.gd" id="1_dbhi3"]
+[ext_resource type="PackedScene" uid="uid://boo2cfvqwlb8b" path="res://scenes/death_world.tscn" id="2_iyi3y"]
+[ext_resource type="Shader" path="res://scenes/cover.gdshader" id="3_80o5l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3dn5f"]
+shader = ExtResource("3_80o5l")
+
+[node name="Cover" type="Control"]
+editor_description = "Used to draw the cover"
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dbhi3")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(576, 648)
+render_target_update_mode = 4
+
+[node name="LifeWorld" parent="SubViewportContainer/SubViewport" instance=ExtResource("1_d83w0")]
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer/SubViewport/LifeWorld"]
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport/LifeWorld/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 8, 20)
+
+[node name="SubViewportContainer2" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer2"]
+own_world_3d = true
+handle_input_locally = false
+size = Vector2i(576, 648)
+render_target_update_mode = 4
+
+[node name="DeathWorld" parent="SubViewportContainer2/SubViewport" instance=ExtResource("2_iyi3y")]
+
+[node name="Node3D" type="Node3D" parent="SubViewportContainer2/SubViewport/DeathWorld"]
+transform = Transform3D(-0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, -0.258819, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer2/SubViewport/DeathWorld/Node3D"]
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 8, 20)
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_3dn5f")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_right = 0.75
+anchor_bottom = 1.0

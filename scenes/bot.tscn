@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://dsn77d8gqxp26"]
+
+[ext_resource type="PackedScene" uid="uid://dr64mj2okjflf" path="res://scenes/character.tscn" id="1_7c1dm"]
+[ext_resource type="Script" path="res://scenes/bot.gd" id="2_1phva"]
+[ext_resource type="PackedScene" uid="uid://cpsnbh4kybuy" path="res://scenes/weapons/pistol.tscn" id="2_djgp0"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_rjvuq"]
+radius = 32.0
+
+[node name="Bot" node_paths=PackedStringArray("weapon") instance=ExtResource("1_7c1dm")]
+wall_min_slide_angle = 3.14159
+script = ExtResource("2_1phva")
+weapon = NodePath("Head/Pistol")
+use_look_accum = false
+
+[node name="Pistol" parent="Head" index="0" instance=ExtResource("2_djgp0")]
+
+[node name="EnemyCheck" type="RayCast3D" parent="Head" index="1"]
+unique_name_in_owner = true
+enabled = false
+target_position = Vector3(0, 0, 0)
+collision_mask = 3
+
+[node name="NavAgent" type="NavigationAgent3D" parent="." index="4"]
+unique_name_in_owner = true
+path_max_distance = 25.01
+
+[node name="CheckForEnemies" type="ShapeCast3D" parent="." index="5"]
+unique_name_in_owner = true
+editor_description = "Immediate collision overlap with ShapeCast to check for enemies"
+shape = SubResource("SphereShape3D_rjvuq")
+target_position = Vector3(0, 0, 0)
+max_results = 4
+collision_mask = 2
+
+[connection signal="health_depleted" from="." to="." method="_on_health_depleted" flags=3]
+[connection signal="recieved_damage" from="." to="." method="_on_recieved_damage" flags=3]

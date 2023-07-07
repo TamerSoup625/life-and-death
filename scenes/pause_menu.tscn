@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://ck1fkcrco05nu"]
+
+[ext_resource type="Script" path="res://scenes/pause_menu.gd" id="1_7t6yq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_njdon"]
+font_size = 128
+
+[node name="PauseMenu" type="ColorRect"]
+process_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+script = ExtResource("1_7t6yq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -123.5
+offset_top = -45.5
+offset_right = 123.5
+offset_bottom = 45.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "PAUSED"
+label_settings = SubResource("LabelSettings_njdon")
+
+[node name="Label2" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "Press ESC to continue"
+horizontal_alignment = 1
+
+[node name="ToMenu" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "To Main Menu"
+
+[connection signal="pressed" from="VBoxContainer/ToMenu" to="." method="_on_to_menu_pressed"]

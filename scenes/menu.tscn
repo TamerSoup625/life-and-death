@@ -1,0 +1,104 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwf830qrdxqxe"]
+
+[ext_resource type="Script" path="res://scenes/menu.gd" id="1_1ohj2"]
+[ext_resource type="Texture2D" uid="uid://3cjmugs4vo3r" path="res://imports/title.png" id="2_jlwm5"]
+[ext_resource type="ArrayMesh" uid="uid://b80gndhvad63" path="res://resources/death_world_mesh.tres" id="3_lyd4n"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_10f3b"]
+sky_top_color = Color(0, 0.027451, 0.74902, 1)
+sky_horizon_color = Color(0.55, 0.549113, 0.720505, 1)
+ground_horizon_color = Color(0.55, 0.549113, 0.720505, 1)
+
+[sub_resource type="Sky" id="Sky_ov1q2"]
+sky_material = SubResource("ProceduralSkyMaterial_10f3b")
+
+[sub_resource type="Environment" id="Environment_48eht"]
+background_mode = 2
+sky = SubResource("Sky_ov1q2")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="Menu" type="ColorRect"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.498039)
+script = ExtResource("1_1ohj2")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.1
+anchor_top = 0.1
+anchor_right = 0.9
+anchor_bottom = 0.1
+offset_bottom = 921.0
+grow_horizontal = 2
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_jlwm5")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.4
+anchor_top = 0.55
+anchor_right = 0.6
+anchor_bottom = 0.55
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayBtn" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "PLAY"
+
+[node name="HowToBtn" type="Button" parent="VBoxContainer2"]
+layout_mode = 2
+text = "How to play"
+
+[node name="HowToPlay" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.2
+anchor_top = 0.7
+anchor_right = 0.8
+anchor_bottom = 1.0
+offset_top = -23.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This is an FPS but when you die, you get sent to the dead realm!
+Shoot other players while in the dead realm to get back to life!
+While alive, you gain points. The player with the highest points after the timer runs out wins!
+Controls:
+WASD: Move     Space: Jump     Mouse: Look around     LMB: Fire     ESC: Pause"
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = ExtResource("3_lyd4n")
+
+[node name="MainOrbit" type="Node3D" parent="MeshInstance3D"]
+unique_name_in_owner = true
+
+[node name="OrbitingCamera" type="Camera3D" parent="MeshInstance3D/MainOrbit"]
+transform = Transform3D(-4.37114e-08, -0.5, 0.866025, 0, 0.866025, 0.5, -1, 2.18557e-08, -3.78552e-08, 20, 12, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="MeshInstance3D"]
+environment = SubResource("Environment_48eht")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MeshInstance3D"]
+transform = Transform3D(0.866025, 0.211309, -0.453154, 0, 0.906308, 0.422618, 0.5, -0.365998, 0.784885, 0, 0, 0)
+shadow_enabled = true
+
+[connection signal="pressed" from="VBoxContainer2/PlayBtn" to="." method="_on_play_btn_pressed"]
+[connection signal="pressed" from="VBoxContainer2/HowToBtn" to="." method="_on_how_to_btn_pressed"]

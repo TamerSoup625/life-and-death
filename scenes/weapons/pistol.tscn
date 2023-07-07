@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpsnbh4kybuy"]
+
+[ext_resource type="PackedScene" uid="uid://cumyc7el1j4c5" path="res://scenes/weapons/weapon.tscn" id="1_aiet7"]
+
+[node name="Pistol" instance=ExtResource("1_aiet7")]
+usetime = 0.1
+damage = 4.0
+
+[node name="Flare" parent="." index="2"]
+visible = true

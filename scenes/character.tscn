@@ -1,0 +1,47 @@
+[gd_scene load_steps=5 format=3 uid="uid://dr64mj2okjflf"]
+
+[ext_resource type="Script" path="res://scenes/character.gd" id="1_ahk57"]
+[ext_resource type="ArrayMesh" uid="uid://t1i8ibfsmiqt" path="res://resources/mesh_character.tres" id="2_m6tge"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_fyi4f"]
+height = 1.75
+radius = 0.3
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_e4wt8"]
+radius = 0.4
+
+[node name="Character" type="CharacterBody3D"]
+collision_layer = 2
+collision_priority = 64.0
+floor_snap_length = 0.25
+script = ExtResource("1_ahk57")
+max_hp = 50.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.875, 0)
+shape = SubResource("CylinderShape3D_fyi4f")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
+instance_shader_parameters/albedo = Color(0, 1, 1, 1)
+mesh = ExtResource("2_m6tge")
+
+[node name="Head" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4, 0)
+gizmo_extents = 0.75
+
+[node name="WarpCorrection" type="ShapeCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 64, 0)
+enabled = false
+shape = SubResource("SphereShape3D_e4wt8")
+target_position = Vector3(0, -63.55, 0)
+max_results = 1
+
+[node name="NameLabel" type="Label3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+pixel_size = 0.01
+billboard = 1
+text = "Hello World"

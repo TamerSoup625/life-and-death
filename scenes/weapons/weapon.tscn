@@ -1,0 +1,68 @@
+[gd_scene load_steps=7 format=3 uid="uid://cumyc7el1j4c5"]
+
+[ext_resource type="Script" path="res://scenes/weapons/weapon.gd" id="1_bnrcg"]
+[ext_resource type="AudioStream" uid="uid://bx0kamwpwnla8" path="res://imports/gunfire.mp3" id="2_3ds50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwnv4"]
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_f730c"]
+material = SubResource("StandardMaterial3D_lwnv4")
+top_radius = 0.025
+bottom_radius = 0.025
+height = 32.0
+radial_segments = 4
+rings = 1
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="Gradient" id="Gradient_jlhwx"]
+offsets = PackedFloat32Array(0)
+colors = PackedColorArray(1, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_oocio"]
+gradient = SubResource("Gradient_jlhwx")
+
+[node name="Weapon" type="Node3D"]
+script = ExtResource("1_bnrcg")
+
+[node name="RayCast" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -256)
+collision_mask = 3
+
+[node name="Visual" type="Node3D" parent="."]
+unique_name_in_owner = true
+top_level = true
+visible = false
+
+[node name="Flare" type="MeshInstance3D" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -16)
+cast_shadow = 0
+mesh = SubResource("CylinderMesh_f730c")
+skeleton = NodePath("../..")
+
+[node name="Decal" type="Decal" parent="Visual"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -16)
+size = Vector3(0.1, 0.1, 32)
+texture_albedo = SubResource("GradientTexture2D_oocio")
+normal_fade = 0.1
+upper_fade = 1e-05
+lower_fade = 1e-05
+
+[node name="Flare" type="MeshInstance3D" parent="."]
+editor_description = "No more warnings"
+visible = false
+
+[node name="FirePosition" type="Marker3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.182835, -0.199083, 0)
+
+[node name="FireSfx" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("2_3ds50")
+unit_size = 5.0
+max_db = 4.0
+max_polyphony = 32
+bus = &"sfx"

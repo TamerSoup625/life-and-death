@@ -1,0 +1,354 @@
+[gd_scene load_steps=17 format=3 uid="uid://ddgnvmgwomaiy"]
+
+[ext_resource type="Script" path="res://scenes/main.gd" id="1_281i1"]
+[ext_resource type="Theme" uid="uid://dm0co7kjkxhpm" path="res://resources/main_theme.tres" id="1_awugk"]
+[ext_resource type="PackedScene" uid="uid://bvrkt3siikuy0" path="res://scenes/life_world.tscn" id="1_v582m"]
+[ext_resource type="PackedScene" uid="uid://boo2cfvqwlb8b" path="res://scenes/death_world.tscn" id="3_fu6i4"]
+[ext_resource type="PackedScene" uid="uid://ck1fkcrco05nu" path="res://scenes/pause_menu.tscn" id="5_o87ae"]
+
+[sub_resource type="Gradient" id="Gradient_nb7ne"]
+offsets = PackedFloat32Array(0, 0.5, 0.990338)
+colors = PackedColorArray(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.498039)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_vimdm"]
+gradient = SubResource("Gradient_nb7ne")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+metadata/_snap_enabled = true
+
+[sub_resource type="LabelSettings" id="LabelSettings_f5y8x"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_1j62w"]
+font_size = 48
+font_color = Color(1, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1ap4m"]
+font_size = 36
+
+[sub_resource type="LabelSettings" id="LabelSettings_5jby4"]
+font_size = 32
+
+[sub_resource type="LabelSettings" id="LabelSettings_ddlon"]
+font_size = 128
+
+[sub_resource type="LabelSettings" id="LabelSettings_hmr1w"]
+font_size = 20
+
+[sub_resource type="Animation" id="Animation_6gpuy"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScreenRed:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_aohe0"]
+resource_name = "screen_red"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ScreenRed:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s4ek7"]
+_data = {
+"RESET": SubResource("Animation_6gpuy"),
+"screen_red": SubResource("Animation_aohe0")
+}
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_awugk")
+script = ExtResource("1_281i1")
+
+[node name="LifeContain" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="LifeContain"]
+own_world_3d = true
+handle_input_locally = false
+audio_listener_enable_3d = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="LifeWorld" parent="LifeContain/SubViewport" instance=ExtResource("1_v582m")]
+unique_name_in_owner = true
+
+[node name="DeathContain" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="DeathContain"]
+own_world_3d = true
+handle_input_locally = false
+audio_listener_enable_3d = true
+size = Vector2i(1152, 648)
+render_target_update_mode = 0
+
+[node name="DeathWorld" parent="DeathContain/SubViewport" instance=ExtResource("3_fu6i4")]
+unique_name_in_owner = true
+
+[node name="ScreenRed" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_vimdm")
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+self_modulate = Color(1, 0, 0, 1)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.3
+anchor_top = 1.0
+anchor_right = 0.7
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -27.0
+offset_right = 2.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 0
+max_value = 1.0
+step = 0.0
+value = 1.0
+
+[node name="HealthLabel" type="Label" parent="HealthBar"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "50/50"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Centre" type="Control" parent="."]
+modulate = Color(1, 1, 1, 0.498039)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Line2D" type="Line2D" parent="Centre"]
+points = PackedVector2Array(2, 0, 16, 0)
+width = 2.0
+
+[node name="Line2D2" type="Line2D" parent="Centre"]
+points = PackedVector2Array(-2, 0, -16, 0)
+width = 2.0
+
+[node name="Line2D3" type="Line2D" parent="Centre"]
+points = PackedVector2Array(0, 2, 0, 16)
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="Line2D4" type="Line2D" parent="Centre"]
+points = PackedVector2Array(0, -2, 0, -16)
+width = 2.0
+default_color = Color(0, 0, 0, 1)
+
+[node name="ScoreIndicator" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_top = 8.0
+offset_right = 8.0
+offset_bottom = 26.0
+grow_horizontal = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ScoreIndicator"]
+layout_mode = 2
+
+[node name="ScoreRank" type="Label" parent="ScoreIndicator/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1°"
+label_settings = SubResource("LabelSettings_f5y8x")
+
+[node name="Score" type="Label" parent="ScoreIndicator/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "3125312.5"
+
+[node name="OneMinuteLeft" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -263.0
+offset_top = -35.0
+offset_right = 263.0
+offset_bottom = 35.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Label" type="Label" parent="OneMinuteLeft"]
+layout_mode = 2
+text = "1 MINUTE REMAINING!"
+label_settings = SubResource("LabelSettings_1j62w")
+
+[node name="Label2" type="Label" parent="OneMinuteLeft"]
+layout_mode = 2
+text = "Score earning while alive doubled!"
+horizontal_alignment = 1
+
+[node name="LeaderboardContain" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -40.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 40.0
+grow_horizontal = 0
+
+[node name="LeaderboardLabel" type="Label" parent="LeaderboardContain"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1st: Bot XXX (XXXX.X)"
+
+[node name="TimeIndicator" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 63.0
+offset_bottom = 48.0
+
+[node name="TimeLabel" type="Label" parent="TimeIndicator"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "4:00"
+label_settings = SubResource("LabelSettings_1ap4m")
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_o87ae")]
+visible = false
+layout_mode = 1
+
+[node name="FinalResult" type="ColorRect" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.498039)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="FinalResult"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -235.0
+offset_top = -130.0
+offset_right = 235.0
+offset_bottom = 130.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="FinalResult/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="FinalResult/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Good Game! Your final rank is:"
+label_settings = SubResource("LabelSettings_5jby4")
+horizontal_alignment = 1
+
+[node name="FinalRank" type="Label" parent="FinalResult/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "1st"
+label_settings = SubResource("LabelSettings_ddlon")
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="FinalResult/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Press ESC to continue"
+horizontal_alignment = 1
+
+[node name="EndLeaderboard" type="Label" parent="FinalResult/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "h
+h
+h
+h
+h
+h
+h
+h"
+label_settings = SubResource("LabelSettings_hmr1w")
+
+[node name="AnimPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_s4ek7")
+}
