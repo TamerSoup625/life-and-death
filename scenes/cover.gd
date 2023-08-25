@@ -1,5 +1,6 @@
 extends Control
 
+# test
 
 func _ready():
 	get_tree().root.mode = Window.MODE_WINDOWED
